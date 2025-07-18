@@ -81,9 +81,8 @@ npm run dev
 ```
 
 访问以下页面：
-- 主页: http://localhost:3001
-- 发射平台: http://localhost:3001/launchpad
-- 钱包测试: http://localhost:3001/test-wallet
+- 主页: http://localhost:3000
+- 发射平台: http://localhost:3000/launchpad
 
 ### 构建生产版本
 ```bash
@@ -110,8 +109,7 @@ slowwitted/
 │   │       └── route.ts          # 代币列表API
 │   ├── launchpad/
 │   │   └── page.tsx              # 发射平台页面
-│   ├── test-wallet/
-│   │   └── page.tsx              # 钱包测试页面
+
 │   ├── globals.css               # 全局样式
 │   ├── layout.tsx                # 根布局
 │   └── page.tsx                  # 主页

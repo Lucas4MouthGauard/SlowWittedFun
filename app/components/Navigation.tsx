@@ -16,8 +16,7 @@ export default function Navigation() {
 
   const navItems = [
     { href: '/', label: t('nav.home') },
-    { href: '/launchpad', label: t('nav.launchpad') },
-    { href: '/test-wallet', label: t('nav.test') }
+    { href: '/launchpad', label: t('nav.launchpad') }
   ];
 
   const isActive = (href: string) => pathname === href;

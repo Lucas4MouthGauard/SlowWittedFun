@@ -48,7 +48,6 @@
 
 - 主页: http://localhost:3000
 - 发射平台: http://localhost:3000/launchpad
-- 钱包测试: http://localhost:3000/test-wallet
 
 ## ⚠️ 注意事项
 

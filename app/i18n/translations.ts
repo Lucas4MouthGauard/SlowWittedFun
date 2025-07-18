@@ -3,8 +3,7 @@ export const translations = {
     // Navigation
     nav: {
       home: "Home",
-      launchpad: "Launchpad",
-      test: "Test Wallet"
+      launchpad: "Launchpad"
     },
     
     // Home page
@@ -108,8 +107,7 @@ export const translations = {
     // Navigation
     nav: {
       home: "首页",
-      launchpad: "发射平台",
-      test: "钱包测试"
+      launchpad: "发射平台"
     },
     
     // Home page

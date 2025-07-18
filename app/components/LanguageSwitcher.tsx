@@ -24,8 +24,8 @@ export default function LanguageSwitcher() {
   }, []);
 
   const languages = [
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'zh', name: '中文', flag: '🇨🇳' }
+    { code: 'en', name: 'EN' },
+    { code: 'zh', name: 'CN' }
   ];
 
   const currentLang = languages.find(lang => lang.code === language);
@@ -41,8 +41,7 @@ export default function LanguageSwitcher() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center space-x-2 px-3 py-2 text-terminal-light-green hover:text-terminal-green transition-colors duration-200 border border-terminal-green rounded-md hover:bg-terminal-green hover:bg-opacity-10"
       >
-        <span className="text-lg">{currentLang?.flag}</span>
-        <span className="font-terminal text-sm">{currentLang?.name}</span>
+        <span className="font-terminal text-sm font-bold">{currentLang?.name}</span>
         <svg
           className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -60,24 +59,23 @@ export default function LanguageSwitcher() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 mt-2 w-48 bg-terminal-black border border-terminal-green rounded-md shadow-lg z-50"
+            className="absolute right-0 mt-2 w-20 bg-terminal-black border border-terminal-green rounded-md shadow-lg z-50"
           >
             <div className="py-1">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code as 'en' | 'zh')}
-                  className={`w-full flex items-center space-x-3 px-4 py-2 text-left hover:bg-terminal-green hover:bg-opacity-10 transition-colors duration-200 ${
+                  className={`w-full flex items-center justify-center px-3 py-2 text-center hover:bg-terminal-green hover:bg-opacity-10 transition-colors duration-200 ${
                     language === lang.code
                       ? 'text-terminal-green bg-terminal-green bg-opacity-20'
                       : 'text-terminal-light-green'
                   }`}
                 >
-                  <span className="text-lg">{lang.flag}</span>
-                  <span className="font-terminal text-sm">{lang.name}</span>
+                  <span className="font-terminal text-sm font-bold">{lang.name}</span>
                   {language === lang.code && (
                     <svg
-                      className="w-4 h-4 ml-auto"
+                      className="w-3 h-3 ml-1"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >

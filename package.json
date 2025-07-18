@@ -20,7 +20,7 @@
     "launchpad",
     "retro"
   ],
-      "author": "SlowWitted Fun Team",
+  "author": "SlowWitted Fun Team",
   "license": "MIT",
   "dependencies": {
     "@fractalwagmi/solana-wallet-adapter": "^0.1.1",
@@ -36,6 +36,7 @@
     "critters": "^0.0.23",
     "framer-motion": "^10.16.4",
     "next": "14.2.30",
+    "pino-pretty": "^13.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
