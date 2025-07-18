@@ -107,21 +107,21 @@ export default function Launchpad() {
               <div className="text-3xl font-terminal font-bold text-terminal-light-green mb-2">
                 {launchCount}/10
               </div>
-              <div className="text-sm">本小时已发射</div>
+              <div className="text-sm">launched this hour</div>
             </div>
             
             <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg text-center">
               <div className="text-3xl font-terminal font-bold text-terminal-light-green mb-2">
                 {formatTime(timeRemaining)}
               </div>
-              <div className="text-sm">重置倒计时</div>
+              <div className="text-sm">reset countdown</div>
             </div>
             
             <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg text-center">
               <div className="text-3xl font-terminal font-bold text-terminal-light-green mb-2">
                 {10 - launchCount}
               </div>
-              <div className="text-sm">剩余发射次数</div>
+              <div className="text-sm">launches remaining</div>
             </div>
           </motion.div>
 
@@ -135,7 +135,7 @@ export default function Launchpad() {
             >
               <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg">
                 <h2 className="text-2xl font-terminal font-bold mb-6 text-center">
-                  发射新代币
+                  launch new coin
                 </h2>
                 <LaunchpadForm 
                   onLaunch={() => setLaunchCount(prev => Math.min(prev + 1, 10))}
@@ -152,7 +152,7 @@ export default function Launchpad() {
             >
               <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg">
                 <h2 className="text-2xl font-terminal font-bold mb-6 text-center">
-                  最近发射
+                  recent launches
                 </h2>
                 <TokenList />
               </div>
@@ -167,30 +167,30 @@ export default function Launchpad() {
             className="mt-8 bg-terminal-gray p-6 border border-terminal-green rounded-lg"
           >
             <h3 className="text-xl font-terminal font-bold mb-4 text-center">
-              发射规则
+              launch rules
             </h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center space-x-2">
-                <span className="text-terminal-light-green">•</span>
-                <span>每小时最多发射10个MemeCoin</span>
+                          <div className="space-y-3 text-sm">
+                <div className="flex items-center space-x-2">
+                  <span className="text-terminal-light-green">•</span>
+                  <span>maximum 10 meme coins per hour</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-terminal-light-green">•</span>
+                  <span>0.1 SOL launch fee per coin</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-terminal-light-green">•</span>
+                  <span>coin name and ticker must be unique</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-terminal-light-green">•</span>
+                  <span>initial liquidity provided by launcher</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-terminal-light-green">•</span>
+                  <span>meteora sdk ensures security and liquidity</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-terminal-light-green">•</span>
-                <span>每个代币需要支付0.1 SOL作为发射费用</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-terminal-light-green">•</span>
-                <span>代币名称和符号必须唯一</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-terminal-light-green">•</span>
-                <span>初始流动性由发射者提供</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-terminal-light-green">•</span>
-                <span>使用Meteora SDK确保安全性和流动性</span>
-              </div>
-            </div>
           </motion.div>
         </div>
       </main>

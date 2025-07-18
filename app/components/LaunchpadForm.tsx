@@ -13,10 +13,11 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
   const { connected } = useWallet();
   const [formData, setFormData] = useState({
     name: '',
-    symbol: '',
+    ticker: '',
     description: '',
-    initialSupply: '',
-    initialLiquidity: ''
+    website: '',
+    x: '',
+    telegram: ''
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,10 +45,11 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
       // 重置表单
       setFormData({
         name: '',
-        symbol: '',
+        ticker: '',
         description: '',
-        initialSupply: '',
-        initialLiquidity: ''
+        website: '',
+        x: '',
+        telegram: ''
       });
     } catch (error) {
       console.error('Launch failed:', error);
@@ -82,9 +84,10 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Coin Name */}
       <div>
         <label className="block text-sm font-terminal font-bold mb-2">
-          代币名称 *
+          coin name
         </label>
         <input
           type="text"
@@ -93,29 +96,31 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
           onChange={handleInputChange}
           required
           className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
-          placeholder="例如: SlowWitted Token"
+          placeholder="name your coin"
         />
       </div>
 
+      {/* Ticker */}
       <div>
         <label className="block text-sm font-terminal font-bold mb-2">
-          代币符号 *
+          ticker
         </label>
         <input
           type="text"
-          name="symbol"
-          value={formData.symbol}
+          name="ticker"
+          value={formData.ticker}
           onChange={handleInputChange}
           required
           maxLength={10}
           className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green uppercase"
-          placeholder="例如: SWT"
+          placeholder="add a coin ticker (e.g. DOGE)"
         />
       </div>
 
+      {/* Description */}
       <div>
         <label className="block text-sm font-terminal font-bold mb-2">
-          描述
+          description (optional)
         </label>
         <textarea
           name="description"
@@ -123,60 +128,71 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
           onChange={handleInputChange}
           rows={3}
           className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green resize-none"
-          placeholder="代币描述..."
+          placeholder="write a short description"
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-terminal font-bold mb-2">
-          初始供应量 *
-        </label>
-        <input
-          type="number"
-          name="initialSupply"
-          value={formData.initialSupply}
-          onChange={handleInputChange}
-          required
-          min="1"
-          className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
-          placeholder="例如: 1000000"
-        />
+      {/* Social Links Section */}
+      <div className="space-y-4">
+        <div className="text-sm font-terminal font-bold text-terminal-light-green">
+          add social links (optional)
+        </div>
+        
+        {/* Website */}
+        <div>
+          <label className="block text-sm font-terminal font-bold mb-2">
+            website
+          </label>
+          <input
+            type="url"
+            name="website"
+            value={formData.website}
+            onChange={handleInputChange}
+            className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
+            placeholder="add URL"
+          />
+        </div>
+
+        {/* X (Twitter) */}
+        <div>
+          <label className="block text-sm font-terminal font-bold mb-2">
+            X
+          </label>
+          <input
+            type="url"
+            name="x"
+            value={formData.x}
+            onChange={handleInputChange}
+            className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
+            placeholder="add URL"
+          />
+        </div>
+
+        {/* Telegram */}
+        <div>
+          <label className="block text-sm font-terminal font-bold mb-2">
+            telegram
+          </label>
+          <input
+            type="url"
+            name="telegram"
+            value={formData.telegram}
+            onChange={handleInputChange}
+            className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
+            placeholder="add URL"
+          />
+        </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-terminal font-bold mb-2">
-          初始流动性 (SOL) *
-        </label>
-        <input
-          type="number"
-          name="initialLiquidity"
-          value={formData.initialLiquidity}
-          onChange={handleInputChange}
-          required
-          min="0.1"
-          step="0.1"
-          className="w-full bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-3 rounded font-mono focus:outline-none focus:border-terminal-light-green"
-          placeholder="例如: 1.0"
-        />
-      </div>
-
+      {/* Launch Fee Info */}
       <div className="bg-terminal-dark p-4 border border-terminal-dim-green rounded">
         <div className="text-sm space-y-2">
           <div className="flex justify-between">
-            <span>发射费用:</span>
+            <span>launch fee:</span>
             <span className="text-terminal-light-green">0.1 SOL</span>
           </div>
-          <div className="flex justify-between">
-            <span>初始流动性:</span>
-            <span className="text-terminal-light-green">{formData.initialLiquidity || '0'} SOL</span>
-          </div>
-          <div className="border-t border-terminal-dim-green pt-2 mt-2">
-            <div className="flex justify-between font-bold">
-              <span>总计:</span>
-              <span className="text-terminal-light-green">
-                {(parseFloat(formData.initialLiquidity) || 0) + 0.1} SOL
-              </span>
-            </div>
+          <div className="text-xs text-terminal-dim-green">
+            * additional liquidity will be required during launch
           </div>
         </div>
       </div>
@@ -195,10 +211,10 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
         {isLoading ? (
           <div className="flex items-center justify-center space-x-2">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-terminal-dark"></div>
-            <span>发射中...</span>
+            <span>launching...</span>
           </div>
         ) : (
-          '发射代币'
+          'launch coin'
         )}
       </motion.button>
     </form>

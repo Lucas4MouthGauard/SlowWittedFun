@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 interface Token {
   id: string;
   name: string;
-  symbol: string;
+  ticker: string;
   address: string;
   launchTime: string;
   initialPrice: number;
@@ -27,7 +27,7 @@ const TokenList: React.FC = () => {
         {
           id: '1',
           name: 'SlowWitted Token',
-          symbol: 'SWT',
+          ticker: 'SWT',
           address: 'SWT...1234',
           launchTime: '2024-01-15 14:30',
           initialPrice: 0.001,
@@ -37,7 +37,7 @@ const TokenList: React.FC = () => {
         {
           id: '2',
           name: 'Retro Coin',
-          symbol: 'RETRO',
+          ticker: 'RETRO',
           address: 'RET...5678',
           launchTime: '2024-01-15 13:45',
           initialPrice: 0.0005,
@@ -47,7 +47,7 @@ const TokenList: React.FC = () => {
         {
           id: '3',
           name: 'Terminal Token',
-          symbol: 'TERM',
+          ticker: 'TERM',
           address: 'TER...9012',
           launchTime: '2024-01-15 12:15',
           initialPrice: 0.002,
@@ -116,7 +116,7 @@ const TokenList: React.FC = () => {
           <div className="flex justify-between items-start mb-3">
             <div>
               <div className="font-terminal font-bold text-lg">{token.name}</div>
-              <div className="text-sm text-terminal-light-green">{token.symbol}</div>
+              <div className="text-sm text-terminal-light-green">{token.ticker}</div>
             </div>
             <div className="text-right">
               <div className="text-sm font-mono">{formatAddress(token.address)}</div>
