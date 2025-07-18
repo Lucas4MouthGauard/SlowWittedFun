@@ -1,8 +1,8 @@
-# SLOW_WITTED - 复古风格Web3 MemeCoin发射平台
+# SlowWitted Fun - 复古风格Web3 MemeCoin发射平台
 
 ## 项目概述
 
-SLOW_WITTED 是一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是"刻意的限制带来更好的专注"。
+SlowWitted Fun 是一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是"刻意的限制带来更好的专注"。
 
 ### 设计理念
 
@@ -44,13 +44,20 @@ SLOW_WITTED 是一个具有早期计算机复古风格的Web3 MemeCoin发射平�
 ### 后端API
 - `/api/launch` - 代币发射API（POST/GET）
 - `/api/tokens` - 代币列表API（GET/POST）
+- `/api/create-token` - 代币创建API（POST）
 - 发射限制验证
 - 实时统计更新
+- 手续费验证
 
 ### 钱包功能
 - 支持Phantom、Solflare等主流Solana钱包
 - 钱包状态显示
 - 连接状态管理
+- **真正的钱包交易验证**
+- **余额检查和发射费用验证**
+- **交易签名和确认**
+- **真实手续费转账到指定地址**
+- **代币创建API集成**
 
 ## 安装和运行
 
@@ -68,6 +75,11 @@ npm install
 npm run dev
 ```
 
+访问以下页面：
+- 主页: http://localhost:3001
+- 发射平台: http://localhost:3001/launchpad
+- 钱包测试: http://localhost:3001/test-wallet
+
 ### 构建生产版本
 ```bash
 npm run build
@@ -83,9 +95,18 @@ slowwitted/
 │   │   ├── TypingEffect.tsx      # 打字机效果组件
 │   │   ├── WalletConnect.tsx     # 钱包连接组件
 │   │   ├── LaunchpadForm.tsx     # 发射表单组件
-│   │   └── TokenList.tsx         # 代币列表组件
+│   │   ├── TokenList.tsx         # 代币列表组件
+│   │   ├── ErrorMessage.tsx      # 错误消息组件
+│   │   └── SuccessMessage.tsx    # 成功消息组件
+│   ├── api/
+│   │   ├── launch/
+│   │   │   └── route.ts          # 发射API
+│   │   └── tokens/
+│   │       └── route.ts          # 代币列表API
 │   ├── launchpad/
 │   │   └── page.tsx              # 发射平台页面
+│   ├── test-wallet/
+│   │   └── page.tsx              # 钱包测试页面
 │   ├── globals.css               # 全局样式
 │   ├── layout.tsx                # 根布局
 │   └── page.tsx                  # 主页
@@ -121,8 +142,9 @@ slowwitted/
 
 ### 费用结构
 - 发射费用: 0.1 SOL
-- 初始流动性: 用户自定义
-- 总计费用实时计算
+- 手续费收款地址: 5qxDFsDhrm4DePVAFq9voBmBZTrgjHVPGvdGvT1d5Pc1
+- 真实Solana链上交易
+- 余额实时验证
 
 ## 开发计划
 
@@ -133,13 +155,15 @@ slowwitted/
 - [x] 钱包连接
 - [x] 发射表单
 - [x] 代币列表
-
-### 待完成
 - [x] Meteora SDK集成
 - [x] 基础代币创建功能
 - [x] 发射限制系统
 - [x] API后端集成
 - [x] 错误处理
+- [x] **真正的钱包交易集成**
+- [x] **余额检查和费用验证**
+
+### 待完成
 - [ ] 完整Meteora流动性池集成
 - [ ] 价格图表
 - [ ] 交易功能
@@ -159,7 +183,7 @@ MIT License
 
 ## 联系方式
 
-- 项目名称: SLOW_WITTED
+- 项目名称: SlowWitted Fun
 - 理念: 在快节奏中寻找慢智慧
 - 目标: 通过限制创造专注
 

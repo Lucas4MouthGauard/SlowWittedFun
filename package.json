@@ -1,37 +1,57 @@
 {
   "name": "slow-witted",
   "version": "1.0.0",
-  "description": "A retro-style Web3 MemeCoin launchpad with intentional limitations",
+  "description": "复古风格Web3 MemeCoin发射平台",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "security-check": "npm audit",
+    "production": "npm run build && npm run start",
+    "production:start": "NODE_ENV=production PORT=3000 next start"
   },
+  "keywords": [
+    "solana",
+    "web3",
+    "memecoin",
+    "launchpad",
+    "retro"
+  ],
+      "author": "SlowWitted Fun Team",
+  "license": "MIT",
   "dependencies": {
+    "@fractalwagmi/solana-wallet-adapter": "^0.1.1",
+    "@keystonehq/sdk": "^0.19.2",
+    "@metaplex-foundation/mpl-token-metadata": "^3.2.0",
     "@meteora-ag/dlmm": "^1.5.4",
-    "@solana/spl-token": "^0.4.13",
-    "@solana/spl-token-registry": "^0.2.4574",
+    "@solana/spl-token": "^0.3.9",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.34",
     "@solana/wallet-adapter-wallets": "^0.19.23",
-    "@solana/web3.js": "^1.87.0",
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "autoprefixer": "^10.4.0",
-    "framer-motion": "^10.16.0",
-    "next": "^14.0.0",
-    "postcss": "^8.4.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.3.0",
-    "typescript": "^5.0.0"
+    "@solana/web3.js": "^1.87.6",
+    "critters": "^0.0.23",
+    "framer-motion": "^10.16.4",
+    "next": "14.2.30",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0"
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.54.0",
+    "eslint-config-next": "14.2.30",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }

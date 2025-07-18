@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useConnection } from '@solana/wallet-adapter-react';
+import { Transaction, PublicKey, LAMPORTS_PER_SOL, SystemProgram } from '@solana/web3.js';
 import { motion } from 'framer-motion';
 import ErrorMessage from './ErrorMessage';
 import SuccessMessage from './SuccessMessage';
@@ -12,7 +14,8 @@ interface LaunchpadFormProps {
 }
 
 const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => {
-  const { connected } = useWallet();
+  const { connected, publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
   const [formData, setFormData] = useState({
     name: '',
     ticker: '',
@@ -24,6 +27,7 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,25 +37,102 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
     }));
   };
 
+  // 获取钱包余额
+  React.useEffect(() => {
+    const getBalance = async () => {
+      if (connected && publicKey) {
+        try {
+          const bal = await connection.getBalance(publicKey);
+          setBalance(bal / LAMPORTS_PER_SOL);
+        } catch (error) {
+          console.error('Failed to get balance:', error);
+        }
+      }
+    };
+
+    getBalance();
+  }, [connected, publicKey, connection]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!connected || disabled) return;
+    if (!connected || disabled || !publicKey) return;
 
     setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
     try {
-      // 调用发射API
+      // 第一步：检查用户余额
+      const balance = await connection.getBalance(publicKey);
+      const launchFee = 0.1 * LAMPORTS_PER_SOL; // 0.1 SOL
+
+      if (balance < launchFee) {
+        throw new Error(`Insufficient balance. You need at least 0.1 SOL. Current balance: ${(balance / LAMPORTS_PER_SOL).toFixed(4)} SOL`);
+      }
+
+      // 第二步：创建真实的手续费转账交易
+      const transaction = new Transaction();
+      
+      // 手续费收款地址
+      const feeRecipient = new PublicKey('5qxDFsDhrm4DePVAFq9voBmBZTrgjHVPGvdGvT1d5Pc1');
+      
+      // 创建转账指令 - 转0.1 SOL到收款地址
+      const transferInstruction = SystemProgram.transfer({
+        fromPubkey: publicKey,
+        toPubkey: feeRecipient,
+        lamports: launchFee
+      });
+      
+      transaction.add(transferInstruction);
+
+      // 第三步：发送手续费交易到钱包
+      const feeSignature = await sendTransaction(transaction, connection);
+      
+      // 第四步：等待手续费交易确认
+      const feeConfirmation = await connection.confirmTransaction(feeSignature, 'confirmed');
+      
+      if (feeConfirmation.value.err) {
+        throw new Error('Fee transaction failed to confirm');
+      }
+
+      // 第五步：调用代币创建API
+      const tokenResponse = await fetch('/api/create-token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          symbol: formData.ticker,
+          description: formData.description,
+          walletAddress: publicKey.toString()
+        }),
+      });
+
+      const tokenResult = await tokenResponse.json();
+
+      if (!tokenResponse.ok) {
+        throw new Error(tokenResult.error || 'Failed to create token');
+      }
+
+      // 第六步：调用后端API记录发射
       const response = await fetch('/api/launch', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          feeTransactionSignature: feeSignature,
+          tokenMint: tokenResult.token.mint,
+          walletAddress: publicKey.toString()
+        }),
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Launch failed');
+        throw new Error(result.error || 'Failed to record launch');
       }
 
       console.log('Token launched successfully:', result);
@@ -68,12 +149,10 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
       });
 
       // 显示成功消息
-      setSuccess(`Token launched successfully! Launches remaining: ${result.launchesRemaining}`);
-      setError(null);
+      setSuccess(`Token launched successfully! Fee: ${feeSignature.slice(0, 8)}... Token: ${tokenResult.token.mint.slice(0, 8)}... Launches remaining: ${result.launchesRemaining}`);
     } catch (error) {
       console.error('Launch failed:', error);
       setError(`Launch failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      setSuccess(null);
     } finally {
       setIsLoading(false);
     }
@@ -220,23 +299,39 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
       {/* Launch Fee Info */}
       <div className="bg-terminal-dark p-4 border border-terminal-dim-green rounded">
         <div className="text-sm space-y-2">
+          {balance !== null && (
+            <div className="flex justify-between">
+              <span>wallet balance:</span>
+              <span className={`${balance >= 0.1 ? 'text-terminal-light-green' : 'text-red-400'}`}>
+                {balance.toFixed(4)} SOL
+              </span>
+            </div>
+          )}
           <div className="flex justify-between">
             <span>launch fee:</span>
             <span className="text-terminal-light-green">0.1 SOL</span>
           </div>
           <div className="text-xs text-terminal-dim-green">
-            * additional liquidity will be required during launch
+            fee recipient: 5qxDFs...5Pc1
+          </div>
+          {balance !== null && balance < 0.1 && (
+            <div className="text-xs text-red-400">
+              ⚠ insufficient balance for launch
+            </div>
+          )}
+          <div className="text-xs text-terminal-dim-green">
+            * real solana transaction required
           </div>
         </div>
       </div>
 
       <motion.button
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || (balance !== null && balance < 0.1)}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         className={`w-full py-4 px-6 rounded-lg font-terminal font-bold text-lg transition-colors ${
-          isLoading 
+          isLoading || (balance !== null && balance < 0.1)
             ? 'bg-terminal-dim-green cursor-not-allowed' 
             : 'bg-terminal-green text-terminal-dark hover:bg-terminal-light-green'
         }`}
@@ -246,6 +341,8 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-terminal-dark"></div>
             <span>launching...</span>
           </div>
+        ) : (balance !== null && balance < 0.1) ? (
+          'insufficient balance'
         ) : (
           'launch coin'
         )}

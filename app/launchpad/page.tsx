@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
-import WalletConnect from '../components/WalletConnect';
 import TypingEffect from '../components/TypingEffect';
 import LaunchpadForm from '../components/LaunchpadForm';
 import TokenList from '../components/TokenList';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Launchpad() {
+  const { t } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [launchCount, setLaunchCount] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(3600); // 1小时
@@ -68,36 +68,12 @@ export default function Launchpad() {
       {/* CRT扫描线效果 */}
       <div className="absolute inset-0 crt pointer-events-none"></div>
       
-      {/* 顶部导航栏 */}
-      <nav className="relative z-10 flex justify-between items-center p-4 border-b border-terminal-green">
-        <div className="flex items-center space-x-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="text-2xl font-terminal font-bold glitch"
-            data-text="SLOW_WITTED"
-          >
-            SLOW_WITTED
-          </motion.div>
-          
-          <div className="flex space-x-6">
-            <Link href="/" className="hover:text-terminal-light-green transition-colors">
-              HOME
-            </Link>
-            <Link href="/launchpad" className="hover:text-terminal-light-green transition-colors">
-              LAUNCHPAD
-            </Link>
-          </div>
+      {/* 时间显示 */}
+      <div className="relative z-10 flex justify-end p-4">
+        <div className="text-sm font-mono text-terminal-light-green">
+          {currentTime.toLocaleTimeString()}
         </div>
-        
-        <div className="flex items-center space-x-4">
-          <div className="text-sm font-mono">
-            {currentTime.toLocaleTimeString()}
-          </div>
-          <WalletConnect />
-        </div>
-      </nav>
+      </div>
 
       {/* 主要内容 */}
       <main className="relative z-10 container mx-auto px-4 py-8">
@@ -109,12 +85,12 @@ export default function Launchpad() {
             transition={{ duration: 1 }}
             className="text-center mb-8"
           >
-            <h1 className="text-5xl font-terminal font-bold mb-4 glitch" data-text="LAUNCHPAD">
-              LAUNCHPAD
+            <h1 className="text-5xl font-terminal font-bold mb-4 glitch" data-text={t('launchpad.title')}>
+              {t('launchpad.title')}
             </h1>
             <div className="text-lg text-terminal-light-green">
               <TypingEffect 
-                text="每小时限制10个MemeCoin发射 - 保持专注，保持简单"
+                text={t('launchpad.subtitle')}
                 speed={80}
               />
             </div>
@@ -226,7 +202,7 @@ export default function Launchpad() {
       <footer className="relative z-10 text-center py-6 border-t border-terminal-green mt-12">
         <div className="text-sm text-terminal-dim-green">
           <TypingEffect 
-            text="SLOW_WITTED LAUNCHPAD - 在限制中寻找机会"
+            text="SlowWitted Fun LAUNCHPAD - 在限制中寻找机会"
             speed={40}
           />
         </div>

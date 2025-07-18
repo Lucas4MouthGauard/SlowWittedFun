@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // 模拟代币数据存储
-let tokens = [
+const tokens = [
   {
     id: '1',
     name: 'SlowWitted Token',

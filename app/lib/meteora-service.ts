@@ -1,5 +1,4 @@
-import { Connection, PublicKey, Keypair, Transaction } from '@solana/web3.js';
-import DLMM from '@meteora-ag/dlmm';
+import { Connection, PublicKey, Keypair } from '@solana/web3.js';
 import { createMint, getOrCreateAssociatedTokenAccount, mintTo } from '@solana/spl-token';
 
 export class MeteoraService {
@@ -27,7 +26,7 @@ export class MeteoraService {
       const mint = mintKeypair.publicKey;
 
       // 创建代币
-      const mintTx = await createMint(
+      await createMint(
         this.connection,
         payer,
         payer.publicKey,
@@ -45,7 +44,7 @@ export class MeteoraService {
       );
 
       // 铸造初始代币
-      const mintToTx = await mintTo(
+      await mintTo(
         this.connection,
         payer,
         mint,
@@ -73,23 +72,23 @@ export class MeteoraService {
    * 创建流动性池
    */
   async createLiquidityPool(
-    payer: Keypair,
-    tokenMint: PublicKey,
+    _payer: Keypair,
+    _tokenMint: PublicKey,
     solAmount: number,
     tokenAmount: number
   ) {
     try {
       // 这里应该使用Meteora DLMM SDK创建流动性池
       // 由于SDK复杂性，这里提供基本框架
-      
-      console.log('Creating liquidity pool for token:', tokenMint.toString());
+      console.log('Creating liquidity pool for token:', _tokenMint.toString());
+      // 使用tokenMint参数
       console.log('SOL amount:', solAmount);
       console.log('Token amount:', tokenAmount);
 
       // 模拟流动性池创建
       const poolData = {
         poolAddress: Keypair.generate().publicKey.toString(),
-        tokenMint: tokenMint.toString(),
+        tokenMint: _tokenMint.toString(),
         solAmount,
         tokenAmount,
         poolType: 'concentrated',
@@ -106,7 +105,7 @@ export class MeteoraService {
   /**
    * 获取代币价格
    */
-  async getTokenPrice(tokenMint: string) {
+  async getTokenPrice() {
     try {
       // 这里应该从Meteora API获取实时价格
       // 目前返回模拟数据
