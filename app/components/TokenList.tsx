@@ -19,45 +19,22 @@ const TokenList: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // 模拟加载数据
+    // 从API加载数据
     const loadTokens = async () => {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const mockTokens: Token[] = [
-        {
-          id: '1',
-          name: 'SlowWitted Token',
-          ticker: 'SWT',
-          address: 'SWT...1234',
-          launchTime: '2024-01-15 14:30',
-          initialPrice: 0.001,
-          currentPrice: 0.0025,
-          volume24h: 1500
-        },
-        {
-          id: '2',
-          name: 'Retro Coin',
-          ticker: 'RETRO',
-          address: 'RET...5678',
-          launchTime: '2024-01-15 13:45',
-          initialPrice: 0.0005,
-          currentPrice: 0.0008,
-          volume24h: 800
-        },
-        {
-          id: '3',
-          name: 'Terminal Token',
-          ticker: 'TERM',
-          address: 'TER...9012',
-          launchTime: '2024-01-15 12:15',
-          initialPrice: 0.002,
-          currentPrice: 0.0015,
-          volume24h: 2200
+      try {
+        const response = await fetch('/api/tokens');
+        const result = await response.json();
+
+        if (response.ok) {
+          setTokens(result.tokens);
+        } else {
+          console.error('Failed to load tokens:', result.error);
         }
-      ];
-      
-      setTokens(mockTokens);
-      setIsLoading(false);
+      } catch (error) {
+        console.error('Error loading tokens:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     loadTokens();

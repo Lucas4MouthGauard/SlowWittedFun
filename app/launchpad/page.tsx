@@ -12,6 +12,7 @@ export default function Launchpad() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [launchCount, setLaunchCount] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(3600); // 1小时
+  const [launchesRemaining, setLaunchesRemaining] = useState(10);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -30,6 +31,29 @@ export default function Launchpad() {
       });
     }, 1000);
     return () => clearInterval(countdown);
+  }, []);
+
+  // 获取发射统计
+  useEffect(() => {
+    const fetchLaunchStats = async () => {
+      try {
+        const response = await fetch('/api/launch');
+        const result = await response.json();
+
+        if (response.ok) {
+          setLaunchCount(result.launchCount);
+          setLaunchesRemaining(result.launchesRemaining);
+          setTimeRemaining(Math.floor(result.timeUntilReset / 1000));
+        }
+      } catch (error) {
+        console.error('Error fetching launch stats:', error);
+      }
+    };
+
+    fetchLaunchStats();
+    const interval = setInterval(fetchLaunchStats, 30000); // 每30秒更新一次
+
+    return () => clearInterval(interval);
   }, []);
 
   const formatTime = (seconds: number) => {
@@ -119,7 +143,7 @@ export default function Launchpad() {
             
             <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg text-center">
               <div className="text-3xl font-terminal font-bold text-terminal-light-green mb-2">
-                {10 - launchCount}
+                {launchesRemaining}
               </div>
               <div className="text-sm">launches remaining</div>
             </div>
@@ -138,8 +162,11 @@ export default function Launchpad() {
                   launch new coin
                 </h2>
                 <LaunchpadForm 
-                  onLaunch={() => setLaunchCount(prev => Math.min(prev + 1, 10))}
-                  disabled={launchCount >= 10}
+                  onLaunch={() => {
+                    setLaunchCount(prev => prev + 1);
+                    setLaunchesRemaining(prev => Math.max(0, prev - 1));
+                  }}
+                  disabled={launchesRemaining <= 0}
                 />
               </div>
             </motion.div>

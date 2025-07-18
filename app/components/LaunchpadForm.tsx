@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { motion } from 'framer-motion';
+import ErrorMessage from './ErrorMessage';
+import SuccessMessage from './SuccessMessage';
 
 interface LaunchpadFormProps {
   onLaunch: () => void;
@@ -20,6 +22,8 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
     telegram: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -35,11 +39,22 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
 
     setIsLoading(true);
     try {
-      // 这里将集成Meteora SDK进行代币创建
-      // 模拟API调用
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log('Launching token:', formData);
+      // 调用发射API
+      const response = await fetch('/api/launch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Launch failed');
+      }
+
+      console.log('Token launched successfully:', result);
       onLaunch();
       
       // 重置表单
@@ -51,8 +66,14 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
         x: '',
         telegram: ''
       });
+
+      // 显示成功消息
+      setSuccess(`Token launched successfully! Launches remaining: ${result.launchesRemaining}`);
+      setError(null);
     } catch (error) {
       console.error('Launch failed:', error);
+      setError(`Launch failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      setSuccess(null);
     } finally {
       setIsLoading(false);
     }
@@ -84,6 +105,18 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <ErrorMessage 
+          message={error} 
+          onClose={() => setError(null)} 
+        />
+      )}
+      {success && (
+        <SuccessMessage 
+          message={success} 
+          onClose={() => setSuccess(null)} 
+        />
+      )}
       {/* Coin Name */}
       <div>
         <label className="block text-sm font-terminal font-bold mb-2">
