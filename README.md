@@ -1,5 +1,10 @@
 # SlowWitted Fun - 复古风格Web3 MemeCoin发射平台
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2.30-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Solana](https://img.shields.io/badge/Solana-Web3-orange)](https://solana.com/)
+
 ## 项目概述
 
 SlowWitted Fun 是一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是"刻意的限制带来更好的专注"。
@@ -180,6 +185,47 @@ slowwitted/
 ## 许可证
 
 MIT License
+
+## 🚀 快速开始
+
+### 环境要求
+- Node.js 18+ 
+- npm 或 yarn
+- Solana钱包 (Phantom, Solflare等)
+
+### 安装和运行
+
+```bash
+# 克隆仓库
+git clone https://github.com/yourusername/slowwitted-fun.git
+cd slowwitted-fun
+
+# 安装依赖
+npm install
+
+# 开发模式运行
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 启动生产服务器
+npm run start
+```
+
+### 访问地址
+- 开发环境: http://localhost:3000
+- 生产环境: http://localhost:3001
+
+## 🌟 主要功能
+
+- ✅ **多语言支持**: 中英文切换，默认英文
+- ✅ **复古终端风格**: 早期计算机黑色背景配绿色文字
+- ✅ **打字机效果**: 真实的复古计算体验
+- ✅ **钱包连接**: 支持Phantom、Solflare等Solana钱包
+- ✅ **代币发射**: 每小时限制10个MemeCoin发射
+- ✅ **真实交易**: 集成Solana区块链真实交易
+- ✅ **响应式设计**: 支持桌面和移动设备
 
 ## 联系方式
 
