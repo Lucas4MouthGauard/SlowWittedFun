@@ -72,17 +72,6 @@ const TokenDisplay: React.FC = () => {
             CA copied to clipboard!
           </motion.div>
         )}
-        
-        <div className="grid grid-cols-2 gap-4 text-xs">
-          <div className="text-center">
-            <div className="text-terminal-light-green font-bold">Market Cap</div>
-            <div className="text-terminal-dim-green">$0.00</div>
-          </div>
-          <div className="text-center">
-            <div className="text-terminal-light-green font-bold">Holders</div>
-            <div className="text-terminal-dim-green">0</div>
-          </div>
-        </div>
       </div>
     </motion.div>
   );
