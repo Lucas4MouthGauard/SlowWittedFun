@@ -3,7 +3,25 @@ import { PublicKey } from '@solana/web3.js';
 
 // 内存存储（生产环境应该使用数据库）
 let launchCount = 0;
-let lastResetTime = Date.now();
+let currentHour = new Date().getHours();
+
+// 获取当前小时的开始时间戳
+const getCurrentHourStart = () => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0, 0).getTime();
+};
+
+// 检查是否需要重置（基于世界时间）
+const checkAndResetIfNeeded = () => {
+  const now = new Date();
+  const currentHourNow = now.getHours();
+  
+  if (currentHourNow !== currentHour) {
+    launchCount = 0;
+    currentHour = currentHourNow;
+    console.log(`Reset launch count at hour ${currentHourNow}`);
+  }
+};
 
 // 速率限制存储
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -125,12 +143,8 @@ export async function POST(request: NextRequest) {
 
     const { name, ticker, description, website, x, telegram, feeTransactionSignature, tokenMint, walletAddress } = body;
 
-    // 检查发射限制
-    const now = Date.now();
-    if (now - lastResetTime > SECURITY_CONFIG.RATE_LIMIT_WINDOW) {
-      launchCount = 0;
-      lastResetTime = now;
-    }
+    // 检查发射限制（基于世界时间）
+    checkAndResetIfNeeded();
 
     if (launchCount >= 10) {
       return NextResponse.json(
@@ -183,16 +197,16 @@ export async function POST(request: NextRequest) {
 
 // 获取发射统计
 export async function GET() {
-  const now = Date.now();
-  if (now - lastResetTime > SECURITY_CONFIG.RATE_LIMIT_WINDOW) {
-    launchCount = 0;
-    lastResetTime = now;
-  }
+  checkAndResetIfNeeded();
+  
+  const now = new Date();
+  const nextHour = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() + 1, 0, 0, 0);
+  const timeUntilReset = Math.max(0, nextHour.getTime() - now.getTime());
 
   return NextResponse.json({
     launchCount,
     maxLaunches: 10,
     launchesRemaining: 10 - launchCount,
-    timeUntilReset: Math.max(0, SECURITY_CONFIG.RATE_LIMIT_WINDOW - (now - lastResetTime))
+    timeUntilReset
   });
 } 

@@ -10,26 +10,24 @@ export default function Launchpad() {
   const { t, language } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [launchCount, setLaunchCount] = useState(0);
-  const [timeRemaining, setTimeRemaining] = useState(3600); // 1小时
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const [launchesRemaining, setLaunchesRemaining] = useState(10);
+
+  // 计算距离下一个整点的秒数
+  const calculateTimeToNextHour = () => {
+    const now = new Date();
+    const nextHour = new Date(now);
+    nextHour.setHours(now.getHours() + 1, 0, 0, 0); // 下一个整点
+    return Math.floor((nextHour.getTime() - now.getTime()) / 1000);
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentTime(new Date());
+      const now = new Date();
+      setCurrentTime(now);
+      setTimeRemaining(calculateTimeToNextHour());
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimeRemaining(prev => {
-        if (prev <= 1) {
-          return 3600; // 重置为1小时
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(countdown);
   }, []);
 
   // 获取发射统计
