@@ -7,6 +7,7 @@ import { Transaction, PublicKey, LAMPORTS_PER_SOL, SystemProgram } from '@solana
 import { motion } from 'framer-motion';
 import ErrorMessage from './ErrorMessage';
 import SuccessMessage from './SuccessMessage';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface LaunchpadFormProps {
   onLaunch: () => void;
@@ -16,6 +17,7 @@ interface LaunchpadFormProps {
 const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => {
   const { connected, publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     ticker: '',
@@ -161,9 +163,11 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
   if (!connected) {
     return (
       <div className="text-center py-8">
-        <div className="text-lg mb-4">请先连接钱包</div>
+        <div className="text-lg mb-4">
+          {language === 'zh' ? '请先连接钱包' : 'Please connect wallet first'}
+        </div>
         <div className="text-sm text-terminal-dim-green">
-          连接Solana钱包以发射代币
+          {language === 'zh' ? '连接Solana钱包以发射代币' : 'Connect Solana wallet to launch tokens'}
         </div>
       </div>
     );
@@ -172,11 +176,19 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
   if (disabled) {
     return (
       <div className="text-center py-8">
-        <div className="text-lg mb-4 text-terminal-dim-green">
-          本小时发射次数已用完
+        <div className="text-2xl mb-4 text-terminal-light-green font-terminal font-bold">
+          Coming Soon
         </div>
-        <div className="text-sm">
-          请等待下一小时重置
+        <div className="text-sm text-terminal-dim-green">
+          {language === 'zh' ? 'Launchpad功能即将上线' : 'Launchpad feature coming soon'}
+        </div>
+        <div className="mt-4 p-4 bg-terminal-dark border border-terminal-green rounded">
+          <div className="text-xs space-y-2">
+            <div>• {language === 'zh' ? '每小时限制10个MemeCoin发射' : 'Maximum 10 MemeCoins per hour'}</div>
+            <div>• {language === 'zh' ? '每次发射收取0.1 SOL手续费' : '0.1 SOL launch fee per coin'}</div>
+            <div>• {language === 'zh' ? '集成Meteora SDK确保流动性' : 'Meteora SDK integration for liquidity'}</div>
+            <div>• {language === 'zh' ? '支持社交媒体链接' : 'Social media links support'}</div>
+          </div>
         </div>
       </div>
     );
@@ -327,16 +339,20 @@ const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => 
 
       <motion.button
         type="submit"
-        disabled={isLoading || (balance !== null && balance < 0.1)}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        disabled={disabled || isLoading || (balance !== null && balance < 0.1)}
+        whileHover={disabled ? {} : { scale: 1.02 }}
+        whileTap={disabled ? {} : { scale: 0.98 }}
         className={`w-full py-4 px-6 rounded-lg font-terminal font-bold text-lg transition-colors ${
-          isLoading || (balance !== null && balance < 0.1)
+          disabled || isLoading || (balance !== null && balance < 0.1)
             ? 'bg-terminal-dim-green cursor-not-allowed' 
             : 'bg-terminal-green text-terminal-dark hover:bg-terminal-light-green'
         }`}
       >
-        {isLoading ? (
+        {disabled ? (
+          <div className="flex items-center justify-center space-x-2">
+            <span className="text-terminal-light-green">Coming Soon</span>
+          </div>
+        ) : isLoading ? (
           <div className="flex items-center justify-center space-x-2">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-terminal-dark"></div>
             <span>launching...</span>

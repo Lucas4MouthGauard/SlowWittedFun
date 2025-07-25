@@ -4,11 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import TypingEffect from '../components/TypingEffect';
 import LaunchpadForm from '../components/LaunchpadForm';
-import TokenList from '../components/TokenList';
 import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Launchpad() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [launchCount, setLaunchCount] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(3600); // 1小时
@@ -77,7 +76,7 @@ export default function Launchpad() {
 
       {/* 主要内容 */}
       <main className="relative z-10 container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* 标题区域 */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -125,42 +124,26 @@ export default function Launchpad() {
             </div>
           </motion.div>
 
-          {/* 主要内容区域 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* 发射表单 */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 1 }}
-            >
-              <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg">
-                <h2 className="text-2xl font-terminal font-bold mb-6 text-center">
-                  launch new coin
-                </h2>
-                <LaunchpadForm 
-                  onLaunch={() => {
-                    setLaunchCount(prev => prev + 1);
-                    setLaunchesRemaining(prev => Math.max(0, prev - 1));
-                  }}
-                  disabled={launchesRemaining <= 0}
-                />
-              </div>
-            </motion.div>
-
-            {/* 代币列表 */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-            >
-              <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg">
-                <h2 className="text-2xl font-terminal font-bold mb-6 text-center">
-                  recent launches
-                </h2>
-                <TokenList />
-              </div>
-            </motion.div>
-          </div>
+          {/* 发射表单 - 居中布局 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="flex justify-center"
+          >
+            <div className="bg-terminal-gray p-8 border border-terminal-green rounded-lg w-full max-w-2xl">
+              <h2 className="text-3xl font-terminal font-bold mb-8 text-center">
+                launch new coin
+              </h2>
+              <LaunchpadForm 
+                onLaunch={() => {
+                  setLaunchCount(prev => prev + 1);
+                  setLaunchesRemaining(prev => Math.max(0, prev - 1));
+                }}
+                disabled={true}
+              />
+            </div>
+          </motion.div>
 
           {/* 说明信息 */}
           <motion.div
@@ -172,28 +155,28 @@ export default function Launchpad() {
             <h3 className="text-xl font-terminal font-bold mb-4 text-center">
               launch rules
             </h3>
-                          <div className="space-y-3 text-sm">
-                <div className="flex items-center space-x-2">
-                  <span className="text-terminal-light-green">•</span>
-                  <span>maximum 10 meme coins per hour</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-terminal-light-green">•</span>
-                  <span>0.1 SOL launch fee per coin</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-terminal-light-green">•</span>
-                  <span>coin name and ticker must be unique</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-terminal-light-green">•</span>
-                  <span>initial liquidity provided by launcher</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-terminal-light-green">•</span>
-                  <span>meteora sdk ensures security and liquidity</span>
-                </div>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-center space-x-2">
+                <span className="text-terminal-light-green">•</span>
+                <span>maximum 10 meme coins per hour</span>
               </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-terminal-light-green">•</span>
+                <span>0.1 SOL launch fee per coin</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-terminal-light-green">•</span>
+                <span>coin name and ticker must be unique</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-terminal-light-green">•</span>
+                <span>initial liquidity provided by launcher</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-terminal-light-green">•</span>
+                <span>meteora sdk ensures security and liquidity</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </main>
@@ -202,7 +185,7 @@ export default function Launchpad() {
       <footer className="relative z-10 text-center py-6 border-t border-terminal-green mt-12">
         <div className="text-sm text-terminal-dim-green">
           <TypingEffect 
-            text="SlowWitted Fun LAUNCHPAD - 在限制中寻找机会"
+            text="SlowWitted Fun LAUNCHPAD - Finding opportunities in limitations"
             speed={40}
           />
         </div>
