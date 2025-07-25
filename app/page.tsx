@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import TypingEffect from './components/TypingEffect';
+import TokenDisplay from './components/TokenDisplay';
 import { useLanguage } from './i18n/LanguageContext';
 
 export default function Home() {
@@ -92,6 +93,11 @@ export default function Home() {
               </div>
             </div>
 
+            {/* $Slow Token Display */}
+            <div className="flex justify-center">
+              <TokenDisplay />
+            </div>
+
             {/* 统计信息 */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-terminal-gray p-6 border border-terminal-green rounded-lg text-center">
@@ -136,12 +142,38 @@ export default function Home() {
 
       {/* 底部信息 */}
       <footer className="relative z-10 text-center py-8 border-t border-terminal-green">
-        <div className="text-sm text-terminal-dim-green">
+        <div className="text-sm text-terminal-dim-green mb-4">
           <TypingEffect 
             text={t('home.footer')}
             speed={30}
           />
         </div>
+        
+        {/* X (Twitter) Button */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="flex justify-center"
+        >
+          <motion.a
+            href="https://x.com/SlowWitted_Fun"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="inline-flex items-center space-x-2 bg-terminal-dark border border-terminal-green text-terminal-green px-4 py-2 rounded-lg hover:border-terminal-light-green hover:text-terminal-light-green transition-colors"
+          >
+            <svg 
+              className="w-5 h-5" 
+              fill="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <span className="font-terminal font-bold">Follow on X</span>
+          </motion.a>
+        </motion.div>
       </footer>
     </div>
   );
