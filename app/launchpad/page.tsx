@@ -68,7 +68,7 @@ export default function Launchpad() {
       {/* 时间显示 */}
       <div className="relative z-10 flex justify-end p-4">
         <div className="text-sm font-mono text-terminal-light-green">
-          {currentTime.toLocaleTimeString()}
+          UTC {currentTime.toISOString().slice(11, 19)}
         </div>
       </div>
 
