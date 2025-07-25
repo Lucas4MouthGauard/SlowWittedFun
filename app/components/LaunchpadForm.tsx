@@ -17,7 +17,7 @@ interface LaunchpadFormProps {
 const LaunchpadForm: React.FC<LaunchpadFormProps> = ({ onLaunch, disabled }) => {
   const { connected, publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     ticker: '',

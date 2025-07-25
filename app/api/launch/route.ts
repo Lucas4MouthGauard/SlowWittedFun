@@ -5,11 +5,7 @@ import { PublicKey } from '@solana/web3.js';
 let launchCount = 0;
 let currentHour = new Date().getHours();
 
-// 获取当前小时的开始时间戳
-const getCurrentHourStart = () => {
-  const now = new Date();
-  return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), 0, 0, 0).getTime();
-};
+
 
 // 检查是否需要重置（基于世界时间）
 const checkAndResetIfNeeded = () => {

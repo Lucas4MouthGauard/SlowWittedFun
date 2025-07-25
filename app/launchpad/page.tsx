@@ -7,7 +7,7 @@ import LaunchpadForm from '../components/LaunchpadForm';
 import { useLanguage } from '../i18n/LanguageContext';
 
 export default function Launchpad() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [launchCount, setLaunchCount] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
