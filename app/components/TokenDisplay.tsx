@@ -32,7 +32,7 @@ const TokenDisplay: React.FC = () => {
           $Slow
         </motion.div>
         <div className="text-sm text-terminal-dim-green">
-          SlowWitted Fun Token
+          Slow Fun Token
         </div>
       </div>
       

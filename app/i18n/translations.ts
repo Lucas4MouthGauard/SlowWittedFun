@@ -8,7 +8,7 @@ export const translations = {
     
     // Home page
     home: {
-      title: "SlowWitted Fun",
+      title: "Slow Fun",
       subtitle: "Because sometimes, slower is faster.",
       description: "A retro-style Web3 MemeCoin launch platform with early computer aesthetics. Our core philosophy is 'deliberate limitations lead to better focus'.",
       features: {
@@ -28,12 +28,12 @@ export const translations = {
         activeTokens: "Active Tokens",
         totalVolume: "Total Volume"
       },
-      footer: "SlowWitted Fun - 2024 - Finding slow wisdom in a fast-paced world"
+      footer: "Slow Fun - 2024 - Finding slow wisdom in a fast-paced world"
     },
     
     // Launchpad page
     launchpad: {
-      title: "SlowWitted Fun LAUNCHPAD",
+      title: "Slow Fun LAUNCHPAD",
       subtitle: "Finding opportunities within limitations",
       form: {
         title: "Launch Your Token",
@@ -112,7 +112,7 @@ export const translations = {
     
     // Home page
     home: {
-      title: "SlowWitted Fun",
+      title: "Slow Fun",
       subtitle: "因为有时候，慢一点就是快一点。",
       description: "一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是'刻意的限制带来更好的专注'。",
       features: {
@@ -132,12 +132,12 @@ export const translations = {
         activeTokens: "活跃代币",
         totalVolume: "总交易量"
       },
-      footer: "SlowWitted Fun - 2024 - 在快节奏中寻找慢智慧"
+      footer: "Slow Fun - 2024 - 在快节奏中寻找慢智慧"
     },
     
     // Launchpad page
     launchpad: {
-      title: "SlowWitted Fun 发射平台",
+      title: "Slow Fun 发射平台",
       subtitle: "在限制中寻找机会",
       form: {
         title: "发射你的代币",

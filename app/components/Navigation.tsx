@@ -30,9 +30,9 @@ export default function Navigation() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="text-2xl font-terminal font-bold text-terminal-green glitch"
-              data-text="SlowWitted Fun"
+              data-text="Slow Fun"
             >
-              SlowWitted Fun
+              Slow Fun
             </motion.div>
           </Link>
 

@@ -20,7 +20,7 @@
     "launchpad",
     "retro"
   ],
-  "author": "SlowWitted Fun Team",
+      "author": "Slow Fun Team",
   "license": "MIT",
   "dependencies": {
     "@fractalwagmi/solana-wallet-adapter": "^0.1.1",

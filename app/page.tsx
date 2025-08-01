@@ -40,8 +40,8 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.5 }}
             className="text-center mb-16"
           >
-                    <h1 className="text-6xl font-terminal font-bold mb-6 glitch" data-text="SlowWitted Fun">
-          SlowWitted Fun
+                    <h1 className="text-6xl font-terminal font-bold mb-6 glitch" data-text="Slow Fun">
+          Slow Fun
             </h1>
             <div className="text-xl text-terminal-light-green">
               <TypingEffect 
@@ -157,7 +157,7 @@ export default function Home() {
           className="flex justify-center"
         >
           <motion.a
-            href="https://x.com/SlowWitted_Fun"
+                            href="https://x.com/Slow_Fun"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1 }}

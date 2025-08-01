@@ -183,7 +183,7 @@ export default function Launchpad() {
       <footer className="relative z-10 text-center py-6 border-t border-terminal-green mt-12">
         <div className="text-sm text-terminal-dim-green">
           <TypingEffect 
-            text="SlowWitted Fun LAUNCHPAD - Finding opportunities in limitations"
+            text="Slow Fun LAUNCHPAD - Finding opportunities in limitations"
             speed={40}
           />
         </div>

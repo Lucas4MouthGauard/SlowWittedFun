@@ -1,4 +1,4 @@
-# SlowWitted Fun 实现状态
+# Slow Fun 实现状态
 
 ## ✅ 已完成功能
 

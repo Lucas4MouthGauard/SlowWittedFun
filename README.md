@@ -1,4 +1,4 @@
-# SlowWitted Fun - 复古风格Web3 MemeCoin发射平台
+# Slow Fun - 复古风格Web3 MemeCoin发射平台
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-14.2.30-black)](https://nextjs.org/)
@@ -7,7 +7,7 @@
 
 ## 项目概述
 
-SlowWitted Fun 是一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是"刻意的限制带来更好的专注"。
+Slow Fun 是一个具有早期计算机复古风格的Web3 MemeCoin发射平台。我们的核心理念是"刻意的限制带来更好的专注"。
 
 ### 设计理念
 
@@ -93,7 +93,7 @@ npm start
 ## 项目结构
 
 ```
-slowwitted/
+slow-fun/
 ├── app/
 │   ├── components/
 │   │   ├── TypingEffect.tsx      # 打字机效果组件
@@ -195,8 +195,8 @@ MIT License
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/slowwitted-fun.git
-cd slowwitted-fun
+git clone https://github.com/yourusername/slow-fun.git
+cd slow-fun
 
 # 安装依赖
 npm install
@@ -227,7 +227,7 @@ npm run start
 
 ## 联系方式
 
-- 项目名称: SlowWitted Fun
+- 项目名称: Slow Fun
 - 理念: 在快节奏中寻找慢智慧
 - 目标: 通过限制创造专注
 

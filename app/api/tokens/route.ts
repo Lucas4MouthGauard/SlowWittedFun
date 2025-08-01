@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 const tokens = [
   {
     id: '1',
-    name: 'SlowWitted Token',
+    name: 'Slow Token',
     ticker: 'SWT',
     address: 'SWT...1234',
     launchTime: '2024-01-15 14:30',
