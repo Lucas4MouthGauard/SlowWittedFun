@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const TokenDisplay: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const contractAddress = 'n3hduL1x6Ac6eZQ2d89RHyfkb4n6s8M3GzjKgwYbonk';
+  const contractAddress = '0000000000000000000000000000';
 
   const copyToClipboard = async () => {
     try {

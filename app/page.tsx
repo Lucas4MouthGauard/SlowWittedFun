@@ -157,7 +157,7 @@ export default function Home() {
           className="flex justify-center"
         >
           <motion.a
-                            href="https://x.com/SlowFun_meme"
+                            href="https://x.com/SLOWFUN_SOL"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1 }}
